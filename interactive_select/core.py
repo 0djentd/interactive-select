@@ -1,8 +1,8 @@
+import logging
 import re
 from dataclasses import dataclass
-from typing import Any, Callable, List, Optional
-import logging
 from string import ascii_letters
+from typing import Any, Callable, List, Optional
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -40,11 +40,11 @@ def _convert_to_str(element: Any) -> str:
 
 
 def select(
-        choices: List[Any],
-        retry: bool = True,
-        min_items: int = 0,
-        max_items: Optional[int] = None,
-               ) -> List[int]:
+    choices: List[Any],
+    retry: bool = True,
+    min_items: int = 0,
+    max_items: Optional[int] = None,
+) -> List[int]:
     if len(choices) == 0:
         return []
     if min_items < 0:
@@ -73,8 +73,7 @@ def select(
                     raise FailedToParseInput
                 query_result.append(item)
             result = query_result
-        except (FailedToParseInput, TooFewItemsSelected,
-                TooManyItemsSelected) as error:
+        except (FailedToParseInput, TooFewItemsSelected, TooManyItemsSelected) as error:
             if retry:
                 print(error)
                 print("Please try again.")
@@ -108,14 +107,14 @@ def _display_items(items):
 
 
 def generate_shortcut(
-        index: int,
-        data: Any,
-        existing_items: List[Item],
-        convert_to_str_func: Callable[[Any], str] = _convert_to_str,
-        generate_lowercase=True,
-        generate_uppercase=True,
-        use_long_shortcuts=True,
-                      ) -> Item:
+    index: int,
+    data: Any,
+    existing_items: List[Item],
+    convert_to_str_func: Callable[[Any], str] = _convert_to_str,
+    generate_lowercase=True,
+    generate_uppercase=True,
+    use_long_shortcuts=True,
+) -> Item:
     short_shortcuts = [item.shortcut for item in existing_items]
     display = convert_to_str_func(data)
     # 'a'
@@ -147,14 +146,13 @@ def generate_shortcut(
             looping = True
             while looping:
                 try:
-                    long_shortcut = display[
-                            start_index:start_index + shortcut_length]
+                    long_shortcut = display[start_index: start_index +
+                                            shortcut_length]
                     for letter in long_shortcut:
                         if letter not in ascii_letters:
                             continue
                     if long_shortcut not in short_shortcuts:
-                        return Item(index, data, display,
-                                    long_shortcut)
+                        return Item(index, data, display, long_shortcut)
                     start_index += 1
                 except IndexError:
                     looping = False

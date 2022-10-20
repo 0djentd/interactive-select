@@ -1,6 +1,7 @@
 import argparse
-import logging
 import json
+import logging
+
 from interactive_select.core import select
 
 logger = logging.getLogger(__name__)
@@ -27,11 +28,7 @@ def main():
     else:
         max_items = config.max
 
-    result = select(
-            config.items,
-            min_items=min_items,
-            max_items=max_items
-                    )
+    result = select(config.items, min_items=min_items, max_items=max_items)
 
     if config.index:
         result = [config.items[index] for index in result]
