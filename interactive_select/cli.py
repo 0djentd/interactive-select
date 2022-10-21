@@ -13,9 +13,11 @@ def main():
     parser.add_argument("items", nargs="*", type=str)
     parser.add_argument("-m", "--min", type=int, default=0)
     parser.add_argument("-M", "--max", type=int, default=-1)
+    parser.add_argument("-r", "--retry", action="store_true")
     parser.add_argument("-d", "--debug", action="store_true")
     parser.add_argument("-j", "--json", action="store_true")
     parser.add_argument("-i", "--index", action="store_true")
+    parser.add_argument("-p", "--prompt", type=str, default="Select: ")
     config = parser.parse_args()
 
     if config.debug:
@@ -28,7 +30,7 @@ def main():
     else:
         max_items = config.max
 
-    result = select(config.items, min_items=min_items, max_items=max_items)
+    result = select(config.items, min_items=min_items, max_items=max_items, retry=config.retry, prompt=config.prompt)
 
     if not config.index:
         result = [config.items[index] for index in result]

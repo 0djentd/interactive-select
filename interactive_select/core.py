@@ -45,6 +45,7 @@ def select(
     min_items: int = 0,
     max_items: Optional[int] = None,
     print_function: Callable[[Any], None] = print,
+    prompt: str = "Select item(s): ",
     **kwargs,
 ) -> List[int]:
     if len(choices) == 0:
@@ -59,7 +60,7 @@ def select(
     result: List[Item] = []
     while not result:
         try:
-            inp = input("select item(s):")
+            inp = input(prompt)
             if min_items == 0 and inp == "":
                 break
             query_result = []
@@ -77,7 +78,6 @@ def select(
             result = query_result
         except (FailedToParseInput, TooFewItemsSelected, TooManyItemsSelected) as error:
             if retry:
-                print(error)
                 print("Please try again.")
                 continue
             raise error
