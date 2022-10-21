@@ -30,7 +30,13 @@ def main():
     else:
         max_items = config.max
 
-    result = select(config.items, min_items=min_items, max_items=max_items, retry=config.retry, prompt=config.prompt)
+    result = select(
+        config.items,
+        min_items=min_items,
+        max_items=max_items,
+        retry=config.retry,
+        prompt=config.prompt,
+    )
 
     if not config.index:
         result = [config.items[index] for index in result]
