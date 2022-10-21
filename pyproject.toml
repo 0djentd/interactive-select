@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "interactive-select"
-version = "0.3.0"
+version = "0.3.1"
 description = ""
 authors = ["0djentd"]
 readme = "README.md"
