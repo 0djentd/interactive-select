@@ -10,9 +10,9 @@ logger.setLevel(logging.DEBUG)
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("items", nargs="*")
-    parser.add_argument("-m", "--min", default=0)
-    parser.add_argument("-M", "--max", default=-1)
+    parser.add_argument("items", nargs="*", type=str)
+    parser.add_argument("-m", "--min", type=int, default=0)
+    parser.add_argument("-M", "--max", type=int, default=-1)
     parser.add_argument("-d", "--debug", action="store_true")
     parser.add_argument("-j", "--json", action="store_true")
     parser.add_argument("-i", "--index", action="store_true")
@@ -30,7 +30,7 @@ def main():
 
     result = select(config.items, min_items=min_items, max_items=max_items)
 
-    if config.index:
+    if not config.index:
         result = [config.items[index] for index in result]
 
     if config.json:
