@@ -88,7 +88,8 @@ def _find_item(inp: str, items: List[Item]) -> Optional[Item]:
 def _generate_items(choices: List[str], **kwargs):
     shortcuts: List[Item] = []
     for index, element in enumerate(choices):
-        shortcuts.append(generate_shortcut(index, element, shortcuts, **kwargs))
+        shortcuts.append(generate_shortcut(
+            index, element, shortcuts, **kwargs))
     return shortcuts
 
 
@@ -137,7 +138,8 @@ def generate_shortcut(
             looping = True
             while looping:
                 try:
-                    long_shortcut = display[start_index : start_index + shortcut_length]
+                    long_shortcut = display[start_index: start_index +
+                                            shortcut_length]
                     for letter in long_shortcut:
                         if letter not in ascii_letters:
                             continue
