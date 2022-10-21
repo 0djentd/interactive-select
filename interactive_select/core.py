@@ -44,6 +44,8 @@ def select(
     retry: bool = True,
     min_items: int = 0,
     max_items: Optional[int] = None,
+    print_function: Callable[[Any], None] = print,
+    **kwargs,
 ) -> List[int]:
     if len(choices) == 0:
         return []
@@ -52,8 +54,8 @@ def select(
     if max_items:
         if max_items < min_items:
             raise ValueError(f"min_items: {min_items}, max_items: {max_items}")
-    items = _generate_items(choices)
-    _display_items(items)
+    items = _generate_items(choices, **kwargs)
+    _display_items(items, print_function)
     result: List[Item] = []
     while not result:
         try:
@@ -94,16 +96,17 @@ def _find_item(inp: str, items: List[Item]) -> Optional[Item]:
     return None
 
 
-def _generate_items(choices: List[str]):
+def _generate_items(choices: List[str], **kwargs):
     shortcuts: List[Item] = []
     for index, element in enumerate(choices):
-        shortcuts.append(generate_shortcut(index, element, shortcuts))
+        shortcuts.append(generate_shortcut(
+            index, element, shortcuts, **kwargs))
     return shortcuts
 
 
-def _display_items(items):
+def _display_items(items, print_function: Callable[[Any], None]):
     for item in items:
-        print(f"{item.index} - {item.display_with_shortcut()}")
+        print_function(f"{item.index} - {item.display_with_shortcut()}")
 
 
 def generate_shortcut(
