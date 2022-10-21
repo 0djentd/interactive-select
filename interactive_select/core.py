@@ -3,25 +3,12 @@ import re
 from dataclasses import dataclass
 from string import ascii_letters
 from typing import Any, Callable, List, Optional
+from interactive_select.exceptions import (
+        FailedToParseInput, ShortcutNotGenerated,
+        TooFewItemsSelected, TooManyItemsSelected)
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-
-
-class ShortcutNotGenerated(Exception):
-    pass
-
-
-class FailedToParseInput(Exception):
-    pass
-
-
-class TooManyItemsSelected(Exception):
-    pass
-
-
-class TooFewItemsSelected(Exception):
-    pass
 
 
 @dataclass
