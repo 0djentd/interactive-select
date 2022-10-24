@@ -65,7 +65,8 @@ def select(
                     raise FailedToParseInput
                 query_result.append(item)
             result = query_result
-        except (FailedToParseInput, TooFewItemsSelected, TooManyItemsSelected) as error:
+        except (FailedToParseInput, TooFewItemsSelected,
+                TooManyItemsSelected) as error:
             if retry:
                 print("Please try again.")
                 continue
@@ -77,10 +78,14 @@ def _find_item(inp: str, items: List[Item]) -> Optional[Item]:
     for item in items:
         if item.shortcut == inp:
             return item
-        if item.index == int(inp):
-            return item
-        # TODO
-        if item.display == inp:
+    try:
+        for item in items:
+            if item.index == int(inp):
+                return item
+    except ValueError:
+        pass
+    for item in items:
+        if re.match(inp, item.display):
             return item
     return None
 
