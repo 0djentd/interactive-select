@@ -75,18 +75,31 @@ def select(
 
 
 def _find_item(inp: str, items: List[Item]) -> Optional[Item]:
-    for item in items:
-        if item.shortcut == inp:
-            return item
+    def shortcut(input_str):
+        for item in items:
+            if item.shortcut == input_str:
+                return item
+
+    result = shortcut(inp)
+    if result:
+        return result
+
     try:
         for item in items:
             if item.index == int(inp):
                 return item
     except ValueError:
         pass
+
     for item in items:
         if re.match(inp, item.display):
             return item
+
+    variations = [inp.upper(), inp.lower()]
+    for variation in variations:
+        result = shortcut(variation)
+        if result:
+            return result
     return None
 
 
